@@ -13,6 +13,8 @@ class TableViewController: UITableViewController {
     
     var students: [Student] = []
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
@@ -31,6 +33,17 @@ class TableViewController: UITableViewController {
         tableView.reloadData()
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let detailViewController = segue.destination as? DetailViewController else { return }
+        if segue.identifier == "insert" {
+            detailViewController.tableViewEditingStyle = .insert
+        }
+        else if segue.identifier == "showDetail" {
+            detailViewController.tableViewEditingStyle = .edit
+            guard let indexPathSelected = tableView.indexPathForSelectedRow else { return }
+            detailViewController.name = students[indexPathSelected.row].name
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource

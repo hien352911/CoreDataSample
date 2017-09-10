@@ -26,6 +26,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="EJu-WR-wbI" kind="show" identifier="showDetail" id="wMT-8T-aSW"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -36,7 +39,7 @@
                     <navigationItem key="navigationItem" id="OrX-t1-GXM">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="7f4-D2-vGn">
                             <connections>
-                                <segue destination="EJu-WR-wbI" kind="show" id="OL6-Ny-n0n"/>
+                                <segue destination="EJu-WR-wbI" kind="show" identifier="insert" id="OL6-Ny-n0n"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -105,4 +108,7 @@
             <point key="canvasLocation" x="101.59999999999999" y="129.98500749625188"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="OL6-Ny-n0n"/>
+    </inferredMetricsTieBreakers>
 </document>
