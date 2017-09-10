@@ -7,10 +7,16 @@
 //
 
 import UIKit
+import CoreData
 
 class TableViewController: UITableViewController {
     
     var students: [Student] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.leftBarButtonItem = editButtonItem
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -41,6 +47,27 @@ extension TableViewController {
         cell.textLabel?.text = students[indexPath.row].name
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            let managedObjectContext = Database.getContext()
+            
+            let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "name==%@", students[indexPath.row].name!)
+            let objects = try! managedObjectContext.fetch(fetchRequest) 
+            
+            for object in objects {
+                managedObjectContext.delete(object)
+            }
+            
+            Database.saveContext()
+            
+            fetchDataFromCoreData()
+        default:
+            break
+        }
     }
 }
 
