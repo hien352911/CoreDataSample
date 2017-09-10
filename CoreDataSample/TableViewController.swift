@@ -32,6 +32,8 @@ class TableViewController: UITableViewController {
         
         tableView.reloadData()
     }
+    
+    // MARK: - Segue
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let detailViewController = segue.destination as? DetailViewController else { return }
@@ -43,6 +45,16 @@ class TableViewController: UITableViewController {
             guard let indexPathSelected = tableView.indexPathForSelectedRow else { return }
             detailViewController.name = students[indexPathSelected.row].name
         }
+    }
+    
+    @IBAction func unwindFromDetailViewControllerToTableViewController(_ segue: UIStoryboardSegue) {
+        guard let detailViewController = segue.source as? DetailViewController else { return }
+        guard let indexPathSelected = tableView.indexPathForSelectedRow else { return }
+        students[indexPathSelected.row].name = detailViewController.nameTextField.text
+        
+        Database.saveContext()
+        
+        fetchDataFromCoreData()
     }
 }
 
