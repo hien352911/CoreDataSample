@@ -28,22 +28,12 @@ class DetailViewController: UIViewController {
     }
    
     @IBAction func saveData(_ sender: UIBarButtonItem) {
-        let managedObjectContext = Database.getContext()
         switch tableViewEditingStyle {
         case .insert:
-            let student = Student(context: managedObjectContext)
-            student.name = nameTextField.text
+            Database.insertObjectToCoreData(name: nameTextField.text!)
+            navigationController?.popViewController(animated: true)
         case .edit:
-            let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "name==%@", name!)
-            let objects = try! managedObjectContext.fetch(fetchRequest)
-            
-            for object in objects {
-                object.name = nameTextField.text
-            }
+            performSegue(withIdentifier: "unwindFromDetailViewControllerToTableViewController", sender: self)
         }
-        Database.saveContext()
-
-        navigationController?.popViewController(animated: true)
     }
 }

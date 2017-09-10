@@ -10,6 +10,14 @@ import Foundation
 import CoreData
 
 class Database {
+    static func insertObjectToCoreData(name: String?) {
+        let managedObjectContext = getContext()
+        let student = Student(context: managedObjectContext)
+        student.name = name
+        
+        saveContext()
+    }
+    
     static func getContext() -> NSManagedObjectContext {
         return persistentContainer.viewContext
     }
