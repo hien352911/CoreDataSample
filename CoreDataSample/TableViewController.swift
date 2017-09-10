@@ -67,13 +67,7 @@ extension TableViewController {
         case .delete:
             let managedObjectContext = Database.getContext()
             
-            let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "name==%@", students[indexPath.row].name!)
-            let objects = try! managedObjectContext.fetch(fetchRequest) 
-            
-            for object in objects {
-                managedObjectContext.delete(object)
-            }
+            managedObjectContext.delete(students[indexPath.row])
             
             Database.saveContext()
             
